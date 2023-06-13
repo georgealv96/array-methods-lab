@@ -16,18 +16,43 @@ const inventors = [
 // Array.prototype.filter()
 // 1. Filter the array of inventors into a new array containing only the inventors born in the 1500's
 
+const newInventors = inventors.filter(
+  (inventor) => inventor.year >= 1500 && inventor.year < 1600
+)
+console.log(newInventors)
+
 // Array.prototype.map()
 // 2. Map the array of the inventors into a new array containing objects with just the first and last names as properties
 // Hint:  Return a new object literal from the callback (don't mutate the object being passed in to map)
 
+const inventorsObject = inventors.map(function (inventor) {
+  return {
+    firstName: inventor.first,
+    lastName: inventor.last
+  }
+})
+console.log(inventorsObject)
+
 // Array.prototype.sort()
 // 3. Sort the inventors by birth date (year property), in ascending order
+
+inventors.sort((xInventor, yInventor) => xInventor.year - yInventor.year)
+console.log(inventors)
 
 // Array.prototype.find()
 // 4. Find the inventor object with the first name of 'Ada'
 
+const inventorAda = inventors.find((inventor) => inventor.first === 'Ada')
+console.log(inventorAda)
+
 // Array.prototype.reduce()
 // 5. How many years did all the inventors live?
+
+const yearsLived = inventors.reduce(
+  (acc, xInventor) => acc + (xInventor.passed - xInventor.year),
+  0
+)
+console.log(yearsLived)
 
 const people = [
   'Becker, Carl',
@@ -76,6 +101,13 @@ const people = [
 // 6. Map the people array such that the new array consists of strings with the names formatted as "First Last", e.g., "Becker, Carl" should be mapped to "Carl Becker".
 // Hint: As a start, consider using the String.prototype.split method to "split" the string using ', ' as the separator
 
+const formattedNames = people.map(function (person) {
+  const newNameFormat = person.split(', ')
+  return `${newNameFormat[1]} ${newNameFormat[0]}`
+})
+
+console.log(formattedNames)
+
 const data = [
   'car',
   'car',
@@ -90,12 +122,19 @@ const data = [
   'car',
   'van',
   'car',
-  'truck'
+  'tk'
 ]
 
 // Array.prototype.reduce()
 // 7. Count the number of instances for each of the data items. The reduce should return an object where the keys are 'car', 'truck', etc. and the values are the count.
 // Hint: Since you want to return an object, be sure to pass an empty {} for the initial value of the "accumulator".
+
+const instances = data.reduce((acc, item) => {
+  acc[item] = acc[item] ? acc[item] + 1 : 1
+  return acc
+}, {})
+
+console.log(instances)
 
 const devs = [
   { name: 'Wes', year: 1988 },
@@ -108,8 +147,22 @@ const devs = [
 // 8. Check if at least one person is 19 or older?
 // Hint: To get today's year, use the getFullYear method of new Date(), i.e., new Date().getFullYear()
 
+const is19Plus = devs.some((dev) => {
+  const currentYear = new Date().getFullYear()
+  return currentYear - dev.year >= 19
+})
+
+console.log(is19Plus)
+
 // Array.prototype.every()
 // 9. Check if everyone is 19 or older?
+
+const isEveryone19 = devs.every(function (dev) {
+  const currentYear = new Date().getFullYear()
+  return currentYear - dev.year >= 19
+})
+
+console.log(isEveryone19)
 
 const comments = [
   { text: 'Love this!', id: 523423 },
@@ -122,5 +175,11 @@ const comments = [
 // Array.prototype.find()
 // 10. Find the comment with the id of 823423
 
+const specificComment = comments.find((comment) => comment.id === 823423)
+console.log(specificComment)
+
 // Array.prototype.findIndex()
 // 11. Find the index of the comment with an id of 123523
+
+const commentIndex = comments.findIndex((comment) => comment.id === 123523)
+console.log(commentIndex)
